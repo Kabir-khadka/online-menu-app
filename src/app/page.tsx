@@ -1,16 +1,18 @@
-// pages/index.js (or index.tsx if using TypeScript)
-
 import React from 'react';
+import ActionButtons from '../components/ActionButtons';
 
 export default function HomePage() {
   return (
     <div style={containerStyle}>
-      <button style={buttonStyle}>
-         Categories <img src="/red_button.svg" alt="icon" style={iconStyle}/>
+      <div style={yellowBoxStyle}>
+        <button style={buttonStyle}>
+          Categories <img src="/red_button.svg" alt="icon" style={iconStyle} />
         </button>
-        <div style={boxStyle}>
-      <button style={buttonStyleRight}>Available items</button>
       </div>
+      <div style={boxStyle}>
+        <button style={buttonStyleRight}>Available items</button>
+      </div>
+      <ActionButtons />
     </div>
   );
 }
@@ -18,53 +20,65 @@ export default function HomePage() {
 // Styles defined and cast to React.CSSProperties
 const containerStyle: React.CSSProperties = {
   display: 'flex',
-  justifyContent: 'space-between',
+  flexDirection: 'column', // Stack elements vertically
+  justifyContent: 'flex-start',
   alignItems: 'flex-start',
   height: '100vh',
-  paddingTop: '20px',
+  paddingTop: '80px',
+  paddingLeft: '20px', // Add padding as needed for alignment
   backgroundColor: '#F2F2F0',
 };
 
+const yellowBoxStyle: React.CSSProperties = {
+  backgroundColor: '#F5B849', // Yellow box color
+  borderRadius: '10px', // Optional: round corners
+  padding: '10px -15px', // Padding inside the yellow box
+  display: 'inline-flex', // Align content inline within the box
+  alignItems: 'center',
+  marginBottom: '20px', // Optional: Space below the yellow box
+  marginTop: '10px',
+  marginLeft: '-25px',
+};
+
 const buttonStyle: React.CSSProperties = {
-  display: 'flex', // Align icon and text in a row
-  alignItems: 'center', // Center icon vertically with text
-  padding: '12px 24px',
-  paddingLeft: '24px',
-  fontSize: '18px',
+  display: 'flex',
+  alignItems: 'center',
+  padding: '10px 24px',
+  fontSize: '14px',
   fontFamily: "'Montserrat', sans-serif",
   fontWeight: 600,
   cursor: 'pointer',
-  width: '80%', // Adjusts for mobile view
-  maxWidth: '200px', // Ensures button doesn’t get too wide on larger screens
-  textAlign: 'left' as React.CSSProperties['textAlign'], // Explicit cast for compatibility
+  backgroundColor: 'transparent', // Remove button background to show yellow box
+  border: 'none', // Remove button border
   color: 'black',
+  textAlign: 'right', // Align text to the right inside the button
 };
 
 const boxStyle: React.CSSProperties = {
-  backgroundColor: '#F5B849',
-  borderRadius: '4px',
-  display: 'flex',       // Flex display to keep the button centered inside
-  alignItems: 'center',  // Align content in the middle
+  // Adjust styling as needed
 };
 
 const buttonStyleRight: React.CSSProperties = {
-  padding: '10px 20px',
-  paddingLeft: '24px',
-  fontSize: '18px',
+  display: 'flex',
+  alignItems: 'center',
+  padding: '10px 24px',
+  fontSize: '14px',
   fontFamily: "'Montserrat', sans-serif",
   fontWeight: 600,
   cursor: 'pointer',
-  width: '100%', // Adjusts for mobile view
-  maxWidth: '200px', // Ensures button doesn’t get too wide on larger screens
-  textAlign: 'right' as React.CSSProperties['textAlign'], // Override to align text on the right
-  margin: 0,
-  color: 'black',
+  marginTop: '20px',
+  marginLeft: '210px',
+  backgroundColor: '#CAC9C7', // Light dark grey for pressed effect
+  color: 'black', // Keep text white for contrast
+  borderRadius: '10px',
+  border: 'none', // Remove any border
+  boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1), inset 0 2px 4px rgba(0, 0, 0, 0.2)', // Softer shadow effect
+  transform: 'translateY(2px)', // Sunken effect to simulate the button being pressed
+  transition: 'all 0.3s ease', // Smooth transition for shadow and movement
 };
 
 const iconStyle: React.CSSProperties = {
-  width: '20px', // Adjust size as needed
-  height: '20px',
-  marginLeft: '7px', // Space between icon and text
+  width: '15px',
+  height: '15px',
+  marginLeft: '7px',
 };
-
-// You can add additional media query styling using CSS modules or styled-components if needed.
