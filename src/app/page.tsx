@@ -1,18 +1,25 @@
 import React from 'react';
 import ActionButtons from '../components/ActionButtons';
+import MyOrderButton from '../components/myorder';
+import FoodMenu from '../components/foodmenu';
+import FoodItems from '../components/fooditems';
 
 export default function HomePage() {
   return (
     <div style={containerStyle}>
+      
       <div style={yellowBoxStyle}>
         <button style={buttonStyle}>
           Categories <img src="/red_button.svg" alt="icon" style={iconStyle} />
         </button>
       </div>
+      <MyOrderButton />
+      <FoodMenu />
       <div style={boxStyle}>
         <button style={buttonStyleRight}>Available items</button>
       </div>
       <ActionButtons />
+      <FoodItems/>
     </div>
   );
 }
@@ -66,13 +73,14 @@ const buttonStyleRight: React.CSSProperties = {
   fontFamily: "'Montserrat', sans-serif",
   fontWeight: 600,
   cursor: 'pointer',
-  marginTop: '20px',
+  marginTop: '10px',
   marginLeft: '210px',
-  backgroundColor: '#CAC9C7', // Light dark grey for pressed effect
-  color: 'black', // Keep text white for contrast
+  backgroundColor: 'transparent', // Light dark grey for pressed effect
+  color: '#FF4500', // Keep text white for contrast
   borderRadius: '10px',
   border: 'none', // Remove any border
-  boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1), inset 0 2px 4px rgba(0, 0, 0, 0.2)', // Softer shadow effect
+  textShadow: '1px 2px 4px rgba(0, 0, 0, 0.4)',
+  boxShadow: 'none', // Softer shadow effect
   transform: 'translateY(2px)', // Sunken effect to simulate the button being pressed
   transition: 'all 0.3s ease', // Smooth transition for shadow and movement
 };

@@ -12,7 +12,7 @@ const ActionButtons: React.FC = () => {
             {/* Circle image icon */}
             <div style={Styles.circleIconContainer as React.CSSProperties}>
                 <img
-                  src="/pictures/man.jpg"//change this to your image path
+                  src="/pictures/white.png"//change this to your image path
                   alt="close"
                   style={Styles.circleIcon as React.CSSProperties}/>
             </div>
@@ -49,7 +49,7 @@ searchInput: {
 
 circleIconContainer: {
     position: 'absolute', // Position the circle relative to the container
-    right: '-26px', // Position it inside the container towards the right
+    right: '-29px', // Position it inside the container towards the right
     top: '50%', // Center vertically
     transform: 'translateY(-50%)', // Adjust for exact vertical centering
     display: 'flex',
@@ -58,8 +58,8 @@ circleIconContainer: {
     
   },
   circleIcon: {
-    width: '30px', // Set the size of the circle
-    height: '30px',
+    width: '40px', // Set the size of the circle
+    height: '40px',
     borderRadius: '50%', // Make it a circle
     objectFit: 'cover', // Ensure the image fits the circle perfectly
     cursor: 'pointer', // Add a pointer cursor for interactivity

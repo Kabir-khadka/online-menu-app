@@ -1,0 +1,53 @@
+.buttonContainer {
+    position: relative; /* Makes it possible to position the dot absolutely */
+    display: inline-block; /* Keeps the button layout inline */
+  }
+  
+  .notificationDot {
+    position: absolute;
+    top: -10px; /* Adjust to position above the button */
+    left: 50%; /* Center align the dot horizontally */
+    transform: translateX(-50%); /* Center horizontally relative to the button */
+    width: 12px;
+    height: 12px;
+    background-color: orange;
+    border-radius: 50%;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    margin-top: -51;
+    margin-left: 165;
+  }
+
+.button {
+    background-color: transparent; /* No background by default */
+    color: black; /* Black text color */
+    padding: 12px 24px;
+    font-size: 18px;
+    font-weight: bold;
+    border: none;
+    border-radius: 8px;
+    box-shadow: none; /* No shadow by default */
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s, color 0.2s;
+    display: flex; /* Flex layout to separate "My" and "Order" */
+    align-items: center;
+    margin-top: -70;
+    margin-left: 300;
+  }
+  
+  .button:hover {
+    color: black; /* Keep text black on hover */
+    transform: scale(1.05);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3); /* Shadow only on hover */
+  }
+  
+  .my {
+    display: inline-block;
+    
+  }
+  
+  .order {
+    display: inline-block;
+    margin-left: -50; /* Push "Order" to the right */
+    transform: translateY(20px);  
+}
+  
