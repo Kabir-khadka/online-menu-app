@@ -2,15 +2,13 @@
 
 import { Radius } from 'lucide-react';
 import React, { CSSProperties, useState } from 'react';
-import { useOrder } from '@/app/context/OrderContext';
 
-const LeftSideText = () => {
+const LeftSideTextTwo = () => {
   // State to keep track of the quantity
   const [quantities, setQuantities] = useState([0, 0, 0]);
-  const { addOrderItem } = useOrder();
 
   // Array of item names
-  const itemNames = ['Buff Laphing', 'Veg Laphing (Chips)', 'Chicken Laphing'];
+  const itemNames = ['Chicken Gravy Rice', 'Buff Gravy Rice', 'Veg Gravy Rice'];
 
   // Function to decrease quantity
   const decreaseQuantity = (index: number) => {
@@ -21,31 +19,20 @@ const LeftSideText = () => {
 
   // Function to increase quantity
   const increaseQuantity = (index: number) => {
-    setQuantities((prevQuantities) => {
-      const newQuantities = [...prevQuantities];
-      newQuantities[index] += 1;
-      return newQuantities;
-    });
-  
-    // Move addOrderItem outside of setQuantities
-    if (quantities[index] + 1 > 0) {
-      addOrderItem({
-        name: itemNames[index],
-        quantity: quantities[index] + 1,
-        price: 5
-      });
-    }
+    setQuantities((prev) =>
+      prev.map((q, i) => (i === index ? q + 1 : q))
+    );
   };
 
   return (
     <div style={containerStyle}>
-      <div style = {textStyleTwo}>Our Specials</div>
+
       
-      <div style={textStyle}>Laphing</div>
+      <div style={textStyle}>Fried Rice</div>
 
       {/* Image element */}
       <img
-        src="/pictures/laphing.jpg"
+        src="/pictures/Friedrice.png"
         alt="Laphing"
         style={imageStyle}
       />
@@ -84,16 +71,7 @@ const containerStyle = {
   position: 'relative' as const,
 };
 
-const textStyleTwo = {
-  position: 'absolute' as const,
-  left: '125px',
-  transform: 'translateY(-50%)',
-  fontSize: '17px',
-  fontWeight: 'bold',
-  color: '#333',
-  marginTop: '15px',
-  fontFamily: "'Montserrat', sans-serif",
-};
+
 
 const textStyle = {
   position: 'absolute' as const,
@@ -186,4 +164,4 @@ const quantityBoxStyle = {
   borderRadius: '4px',
 };
 
-export default LeftSideText;
+export default LeftSideTextTwo;

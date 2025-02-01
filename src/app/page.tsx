@@ -1,8 +1,8 @@
 import React from 'react';
 import ActionButtons from '../components/ActionButtons';
-import MyOrderButton from '../components/myorder';
+import MyOrderButton from '../components/myOrderButton';
 import FoodMenu from '../components/foodmenu';
-import FoodItems from '../components/fooditems';
+
 
 export default function HomePage() {
   return (
@@ -15,11 +15,7 @@ export default function HomePage() {
       </div>
       <MyOrderButton />
       <FoodMenu />
-      <div style={boxStyle}>
-        <button style={buttonStyleRight}>Available items</button>
-      </div>
-      <ActionButtons />
-      <FoodItems/>
+      <ActionButtons />      
     </div>
   );
 }
@@ -30,10 +26,11 @@ const containerStyle: React.CSSProperties = {
   flexDirection: 'column', // Stack elements vertically
   justifyContent: 'flex-start',
   alignItems: 'flex-start',
-  height: '100vh',
+  minHeight: '200vh', // Ensure extra height for scrolling
   paddingTop: '80px',
   paddingLeft: '20px', // Add padding as needed for alignment
-  backgroundColor: '#F2F2F0',
+  backgroundColor: '#fdd7a2',
+  overflowY: 'auto', // Enable vertical scrolling
 };
 
 const yellowBoxStyle: React.CSSProperties = {
@@ -60,31 +57,6 @@ const buttonStyle: React.CSSProperties = {
   color: 'black',
   textAlign: 'right', // Align text to the right inside the button
 };
-
-const boxStyle: React.CSSProperties = {
-  // Adjust styling as needed
-};
-
-const buttonStyleRight: React.CSSProperties = {
-  display: 'flex',
-  alignItems: 'center',
-  padding: '10px 24px',
-  fontSize: '14px',
-  fontFamily: "'Montserrat', sans-serif",
-  fontWeight: 600,
-  cursor: 'pointer',
-  marginTop: '10px',
-  marginLeft: '210px',
-  backgroundColor: 'transparent', // Light dark grey for pressed effect
-  color: '#FF4500', // Keep text white for contrast
-  borderRadius: '10px',
-  border: 'none', // Remove any border
-  textShadow: '1px 2px 4px rgba(0, 0, 0, 0.4)',
-  boxShadow: 'none', // Softer shadow effect
-  transform: 'translateY(2px)', // Sunken effect to simulate the button being pressed
-  transition: 'all 0.3s ease', // Smooth transition for shadow and movement
-};
-
 const iconStyle: React.CSSProperties = {
   width: '15px',
   height: '15px',
