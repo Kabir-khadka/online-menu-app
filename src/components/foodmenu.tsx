@@ -1,49 +1,34 @@
-// Add this line at the top of your file
-'use client'; 
+'use client';
 
 import React, { useState } from 'react';
 import LeftSideText from './fooditems';
 import LeftSideTextTwo from './friedrice';
 
 const FoodMenu = () => {
-  //State to track the currently active button
+  // State to track the currently active button
   const [activeButton, setActiveButton] = useState<string>('Food');
 
-  //Function to handle button click
+  // Function to handle button click
   const handleButtonClick = (buttonName: string) => {
-    setActiveButton(buttonName); //Set the clicked button as active
+    setActiveButton(buttonName);
   };
 
   return (
-    <div>
-      <div style={styles.firstRowContainer}>
-        {['Food', 'Momos', 'Noodles', 'Pizza'].map((item) => (
+    <div style={styles.container}>
+      {/* Category Buttons */}
+      <div style={styles.buttonGrid}>
+        {['Food', 'Momos', 'Noodles', 'Pizza', 'Drinks', 'Snacks', 'Combos', 'Desserts'].map((item) => (
           <button
-          key={item}
-          onClick={() => handleButtonClick(item)}
-          style={{
-            ...styles.button,
-            ...(activeButton === item ? styles.activeButton : {}),
-          }}
-        >
-          <span style={styles.text}>{item}</span>
-        </button>
-        ))}       
-      </div>
-      
-      <div style={styles.secondRowContainer}>
-        {['Drinks', 'Snacks', 'Combos', 'Desserts'].map((item) => (
-          <button
-          key={item}
-          onClick={() => handleButtonClick(item)}
-          style={{
-            ...styles.button,
-            ...(activeButton === item ? styles.activeButton : {}),
-          }}
+            key={item}
+            onClick={() => handleButtonClick(item)}
+            style={{
+              ...styles.button,
+              ...(activeButton === item ? styles.activeButton : {}),
+            }}
           >
             <span style={styles.text}>{item}</span>
           </button>
-        ))}      
+        ))}
       </div>
 
       {/* "Available items" Button */}
@@ -51,10 +36,14 @@ const FoodMenu = () => {
         <button style={styles.availableItemsButton}>Available items</button>
       </div>
 
+      {/* Content Section */}
       <div style={styles.contentContainer}>
-        {activeButton === 'Food' && (<> <LeftSideText />
-      <LeftSideTextTwo />
-    </>)}
+        {activeButton === 'Food' && (
+          <>
+            <LeftSideText />
+            <LeftSideTextTwo />
+          </>
+        )}
         {activeButton === 'Momos' && <div>Food items content here</div>} 
         {activeButton === 'Noodles' && <div>Noodles items content here</div>} 
         {activeButton === 'Pizza' && <div>Pizza items content here</div>} 
@@ -62,49 +51,41 @@ const FoodMenu = () => {
         {activeButton === 'Snacks' && <div>Snacks items content here</div>} 
         {activeButton === 'Combos' && <div>Combos items content here</div>} 
         {activeButton === 'Desserts' && <div>Desserts items content here</div>} 
-
       </div>
     </div>
   );
 };
 
-const styles : {
-  firstRowContainer: React.CSSProperties;
-  secondRowContainer: React.CSSProperties;
-  button: React.CSSProperties;
-  activeButton: React.CSSProperties;
-  text: React.CSSProperties;
-  contentContainer: React.CSSProperties; // Add this line for contentContainer
-  availableItemsContainer: React.CSSProperties;
-  availableItemsButton: React.CSSProperties;
-} = {
-  firstRowContainer: {
+// Responsive Styles with 4 buttons per row
+const styles: { [key: string]: React.CSSProperties } = {
+  container: {
     display: 'flex',
-    justifyContent: 'center',
-    gap: '10px',
-    marginTop: '-4px',
-    marginLeft: '-15px',
+    flexDirection: 'column',
+    alignItems: 'center',
+    width: '100%',
+    padding: '10px',
   },
-  secondRowContainer: {
-    display: 'flex',
-    justifyContent: 'center',
+  buttonGrid: {
+    display: 'grid',
+    gridTemplateColumns: 'repeat(4, 1fr)', // Ensures 4 buttons per row
     gap: '10px',
-    marginTop: '10px',
-    marginLeft: '-12px',
+    width: '100%',
+    maxWidth: '600px',
+    justifyContent: 'center',
+    marginLeft: '-15px'
   },
-
   button: {
-    width: '85px',         // Fixed width for all buttons
-    height: '40px',         // Fixed height for all buttons
-    fontSize: '16px',
+    padding: '10px',
+    fontSize: '14px',
+    fontWeight: 'bold',
     cursor: 'pointer',
     border: '1px solid #ccc',
-    borderRadius: '4px',
+    borderRadius: '6px',
     background: 'none',
     color: '#333',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
+    textAlign: 'center',
+    transition: 'background 0.3s ease, transform 0.2s ease',
+    
   },
   activeButton: {
     background: '#444',
@@ -114,34 +95,29 @@ const styles : {
   text: {
     fontWeight: 'bold',
   },
-  contentContainer: { // This is where we define the contentContainer style
-    marginTop: '20px',
-    display: 'flex',
-    justifyContent: 'center',
-    flexDirection: 'column',
-    alignItems: 'center',
-  },
   availableItemsContainer: {
-    
+    marginTop: '15px',
   },
   availableItemsButton: {
+    padding: '12px 5px',
+    fontSize: '14px',
+    fontWeight: '600',
+    cursor: 'pointer',
+    backgroundColor: 'transparent',
+    color: '#FF4500',
+    borderRadius: '10px',
+    border: 'none',
+    textShadow: '1px 2px 4px rgba(0, 0, 0, 0.4)',
+    transition: 'all 0.3s ease',
+    marginLeft: '200px'
+  },
+  contentContainer: {
+    marginTop: '20px',
     display: 'flex',
-  alignItems: 'center',
-  padding: '10px 24px',
-  fontSize: '14px',
-  fontFamily: "'Montserrat', sans-serif",
-  fontWeight: 600,
-  cursor: 'pointer',
-  marginTop: '10px',
-  marginLeft: '210px',
-  backgroundColor: 'transparent', // Light dark grey for pressed effect
-  color: '#FF4500', // Keep text white for contrast
-  borderRadius: '10px',
-  border: 'none', // Remove any border
-  textShadow: '1px 2px 4px rgba(0, 0, 0, 0.4)',
-  boxShadow: 'none', // Softer shadow effect
-  transform: 'translateY(2px)', // Sunken effect to simulate the button being pressed
-  transition: 'all 0.3s ease', // Smooth transition for shadow and movement
+    flexDirection: 'column',
+    alignItems: 'center',
+    width: '100%',
+    maxWidth: '600px',
   },
 };
 
