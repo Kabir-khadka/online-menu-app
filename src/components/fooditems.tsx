@@ -95,9 +95,13 @@ const ItemRow = ({ itemName, quantity, onDecrease, onIncrease }: ItemRowProps) =
 const styles: { [key: string]: CSSProperties } = {
   container: {
     position: 'relative',
-    width: '110%',
-    padding: '0px 5px'
+    width: '100%',
+    padding: '0px 1px',
+    margin: '0 auto',
+    maxWidth: '500px',
+    
   },
+  
   textStyleTwo: {
     position: 'absolute',
     left: '125px',
