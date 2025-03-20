@@ -1,10 +1,30 @@
-import React from 'react';
+'use client';
+
+import React, { useEffect, useState } from 'react';
 import ActionButtons from '../components/ActionButtons';
 import MyOrderButton from '../components/myOrderButton';
 import FoodMenu from '../components/foodmenu';
+import QRCodeDownload from '../components/qrCodeDownload';
+
 
 
 export default function HomePage() {
+const [tableNumber, setTableNumber] = useState<string>(''); // Table Number State
+
+//Assign a unique table number on page load
+useEffect(() =>{
+  const storedTableNumber = sessionStorage.getItem('tableNumber');
+  if(!storedTableNumber) {
+    //If no table number exists, generate a random one(e.g between 1 and 1000)
+    const randomTableNumber = Math.floor(Math.random() * 1000) +1;
+    sessionStorage.setItem('tableNumber', randomTableNumber.toString());
+    setTableNumber(randomTableNumber.toString());
+
+  } else {
+    setTableNumber(storedTableNumber);
+  }
+}, []);
+
   return (
     <div style={containerStyle}>
       
@@ -13,9 +33,15 @@ export default function HomePage() {
           Categories <img src="/red_button.svg" alt="icon" style={iconStyle} />
         </button>
       </div>
+
+      {/*seperate division for table number adjustments*/}
+      <div style={tableNumberContainerStyle}>
+        <h1 style={tableNumberStyle}>Table No: {tableNumber}</h1>
+        </div>
+
       <MyOrderButton />
       <FoodMenu />
-      <ActionButtons />      
+      <ActionButtons />              
     </div>
   );
 }
@@ -31,6 +57,23 @@ const containerStyle: React.CSSProperties = {
   paddingLeft: '20px', // Add padding as needed for alignment
   backgroundColor: '#fdd7a2',
   overflowY: 'auto', // Enable vertical scrolling
+};
+
+// Centered Table Number Style
+const tableNumberContainerStyle: React.CSSProperties = {
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
+  width: '100%', // Make it full width to center properly
+  marginTop: '0px', // Adjust spacing
+};
+
+// Table number text (Matches Categories button size)
+const tableNumberStyle: React.CSSProperties = {
+  fontSize: '14px', // Match Categories button font size
+  fontFamily: "'Montserrat', sans-serif",
+  fontWeight: 600,
+  color: 'black', // Ensure it's visible
 };
 
 const yellowBoxStyle: React.CSSProperties = {

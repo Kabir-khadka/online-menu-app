@@ -1,4 +1,4 @@
-'use client'
+'use client';
 
 import React, { useState, useEffect } from "react";
 import { useRouter } from 'next/navigation';
@@ -7,10 +7,9 @@ import { useOrder } from "../context/OrderContext";
 const PaymentPage: React.FC = () => {
     const router = useRouter();
     const [isHovered, setIsHovered] = useState(false);
-    const [isEsewaHovered, setIsEsewaHovered] = useState(false); // New state for esewa button
-    const [isClient, setIsClient] = useState(false); 
-    const [showNotice, setShowNotice] = useState(false); // Fix for hydration issue
-    const [isMobile, setIsMobile] = useState(false);
+    const [isEsewaHovered, setIsEsewaHovered] = useState(false);
+    const [isClient, setIsClient] = useState(false);
+    const [showNotice, setShowNotice] = useState(false);
     const { orderItems } = useOrder();
 
     const totalBill = orderItems.reduce(
@@ -18,152 +17,100 @@ const PaymentPage: React.FC = () => {
         0
     );
 
-
     useEffect(() => {
-        setIsClient(true);  // Ensure this runs only in the browser
-
-        // Check if it's a mobile device
-        const checkMobile = () => {
-            const userAgent = window.navigator.userAgent.toLowerCase();
-            const isMobileDevice = 
-                /android|webos|iphone|ipad|ipod|blackberry|iemobile|opera mini/i.test(userAgent);
-            setIsMobile(isMobileDevice);
-        };
-
-        checkMobile();
+        setIsClient(true);
     }, []);
 
-    
-    
-    
-    //Add click handler for the document
     useEffect(() => {
-        if(showNotice) {
+        if (showNotice) {
             const handleClickOutside = () => {
                 setShowNotice(false);
             };
 
             document.addEventListener('click', handleClickOutside);
 
-
-            //Cleanup function
             return () => {
                 document.removeEventListener('click', handleClickOutside);
             };
         }
     }, [showNotice]);
 
-
     const handleEsewaPayment = () => {
-        if (isMobile) {
-            //Esewa deep link for mobile devices
-            window.location.href = `esewa://payment?amt=${totalBill}&pdc=&pid=ORDER${Date.now()}&scd=MERCHANTCODE`;
-
-            //Fallback for if app doesn't open
-            setTimeout(() => {
-                window.location.href = '/payment';
-            },1000);
-        } else {
-            //Show a message or handle non-mobile devicess
-            alert('Esewa payment is only available on mobile devices.');
-        }
+        window.location.href = "intent://esewa/#Intent;scheme=esewa;package=com.f1soft.esewa;end";
     };
-
 
     return (
         <div style={pageStyle}>
-            <button
-               style={backButtonStyle}
-               onClick={() => router.push('/myorder')}
-            >
+            <button style={backButtonStyle} onClick={() => router.push('/myorder')}>
                 ← Back
             </button>
 
             <h1 style={headingStyle}>Payment</h1>
 
-        {/* Bill Display. */}
-        <div style={billContainerStyle}>
-            <div style={billHeaderStyle}>
-                <h2 style={billTitleStyle}>Order Summary</h2>
-                <div style={dateStyle}>
-                    {new Date().toLocaleDateString()}
-                </div>
-            </div>
-
-            <div style={billItemsContainerStyle}>
-                {/* Header Row */}
-                <div style={billRowHeaderStyle}>
-                    <span style={itemNameHeaderStyle}>Item</span>
-                    <span style={qtyHeaderStyle}>Qty</span>
-                    <span style={priceHeaderStyle}>Price</span>
+            <div style={billContainerStyle}>
+                <div style={billHeaderStyle}>
+                    <h2 style={billTitleStyle}>Order Summary</h2>
+                    <div style={dateStyle}>{new Date().toLocaleDateString()}</div>
                 </div>
 
-                {/*Items*/}
-                {orderItems.map((item, index) => (
-                    <div key={index} style={billRowStyle}>
-                        <span style={itemNameStyle}>{item.name}</span>
-                        <span style={qtyStyle}>{item.quantity}</span>
-                        <span style={priceStyle}>${(item.price * item.quantity).toFixed(2)}</span>
+                <div style={billItemsContainerStyle}>
+                    <div style={billRowHeaderStyle}>
+                        <span style={itemNameHeaderStyle}>Item</span>
+                        <span style={qtyHeaderStyle}>Qty</span>
+                        <span style={priceHeaderStyle}>Price</span>
+                    </div>
+
+                    {orderItems.map((item, index) => (
+                        <div key={index} style={billRowStyle}>
+                            <span style={itemNameStyle}>{item.name}</span>
+                            <span style={qtyStyle}>{item.quantity}</span>
+                            <span style={priceStyle}>${(item.price * item.quantity).toFixed(2)}</span>
                         </div>
-                ))}
+                    ))}
 
-                {/*Total*/}
-                <div style={totalRowStyle}>
-                    <span style={totalLabelStyle}>Total Amount</span>
-                    <span style={totalAmountStyle}>${totalBill.toFixed(2)}</span>
+                    <div style={totalRowStyle}>
+                        <span style={totalLabelStyle}>Total Amount</span>
+                        <span style={totalAmountStyle}>${totalBill.toFixed(2)}</span>
+                    </div>
                 </div>
             </div>
-        </div>
 
-
-        <div style={buttonContainerStyle}>
-            <button 
-                style={{
-                    ...bankPayButtonStyle,
-                    ...(isHovered ? hoverStyle : {}),
-                }}
-                onMouseEnter={() => setIsHovered(true)}
+            <div style={buttonContainerStyle}>
+                <button 
+                    style={{ ...bankPayButtonStyle, ...(isHovered ? hoverStyle : {}) }}
+                    onMouseEnter={() => setIsHovered(true)}
                     onMouseLeave={() => setIsHovered(false)}
                     onClick={(e) => {
-                        e.stopPropagation(); //Prevent immediate dismissal
+                        e.stopPropagation();
                         setShowNotice(true);
                     }}
-            >
-                Pay with your trusted bank App
-            </button>
+                >
+                    Pay with your trusted bank App
+                </button>
 
-            {showNotice && (
-                <div style={overlayStyle}>
-                    <div
-                      style={noticeboardStyle}
-                      onClick={(e) => e.stopPropagation()}//Prevent clicks on notice from dismissing
-                    >
-                    <div style={noticeContentStyle}>
-                        please use the QR that's on your table!
+                {showNotice && (
+                    <div style={overlayStyle}>
+                        <div style={noticeboardStyle} onClick={(e) => e.stopPropagation()}>
+                            <div style={noticeContentStyle}>Please use the QR that's on your table!</div>
+                        </div>
                     </div>
-                    </div>
-                    </div>
-            )}
+                )}
 
-            <h3 style={orStyle}>OR</h3>
+                <h3 style={orStyle}>OR</h3>
 
-            {/* New Esewa Button */}
-            <button 
-               style={{
-                ...bankPayButtonStyle,
-                ...(isEsewaHovered ? hoverStyle : {}),
-                backgroundColor: '#60BB46', // Esewa's green color
-               }}
-               onMouseEnter={() => setIsEsewaHovered(true)}
-               onMouseLeave={() => setIsEsewaHovered(false)}
-               onClick={handleEsewaPayment}
-               >
-                Pay with Esewa
-               </button>
+                <button 
+                    style={{ ...bankPayButtonStyle, ...(isEsewaHovered ? hoverStyle : {}), backgroundColor: '#60BB46' }}
+                    onMouseEnter={() => setIsEsewaHovered(true)}
+                    onMouseLeave={() => setIsEsewaHovered(false)}
+                    onClick={handleEsewaPayment}
+                >
+                    Pay with Esewa
+                </button>
             </div>
         </div>
     );
 };
+
 
 const pageStyle: React.CSSProperties = {
     minHeight: '100vh',

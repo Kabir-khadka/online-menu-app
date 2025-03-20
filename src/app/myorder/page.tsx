@@ -16,10 +16,46 @@ const MyOrderPage: React.FC = () => {
         0
     );
 
-    const handleConfirmOrder = () => {
-        //Navigate to payment page instead of showinf alert
-        router.push('/payment');
-    };
+    const handleConfirmOrder = async () => {
+      console.log("Current Order Items:", orderItems); // <-- Check orderItems before sending
+  
+      const storedTableNumber = sessionStorage.getItem('tableNumber');
+      if (!storedTableNumber) {
+          alert("Table number not found!");
+          return;
+      }
+  
+      if (orderItems.length === 0) {
+          alert("No items in the order!");
+          return;
+      }
+  
+      const orderData = {
+          tableNumber: storedTableNumber,
+          orderItems
+      };
+  
+      try {
+          const response = await fetch('http://localhost:5000/api/orders', {
+              method: 'POST',
+              headers: {
+                  'Content-Type': 'application/json'
+              },
+              body: JSON.stringify(orderData)
+          });
+  
+          if (response.ok) {
+              alert('Order confirmed successfully!');
+              router.push('/payment');
+          } else {
+              alert('Failed to confirm order. Please try again.');
+          }
+      } catch (error) {
+          console.error('Error confirming order:', error);
+          alert('Something went wrong.');
+      }
+  };
+  
 
     return (
         <div style={pageStyle}>
